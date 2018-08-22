@@ -21,8 +21,9 @@ While limited to certain applications it has the advantage of having few hyperpa
 
 The algorithm can be used following the same BackgroundSubtractor interface as other background estimation methods in OpenCV.
 
-	Ptr<BackgroundSubtractorAMED> createBackgroundSubtractorAMED(double seg_threshold=20, int seg_blur_size=3, bool ramp_init=true, bool masked_update=false)
-	
+```c++
+Ptr<BackgroundSubtractorAMED> createBackgroundSubtractorAMED(double seg_threshold=20, int seg_blur_size=3, bool ramp_init=true, bool masked_update=false)
+```
 
 - **seg_threshold:** Intensity threshold to segment foreground objects.
 - **seg_blur_size:** Size of box blur applied on abs(current_frame-background) before thresholding. Reduces noise but reduces precision of object boundaries. Set to '1' to disable.
@@ -33,60 +34,62 @@ The "updateRate" in OpenCV interface corresponds to the "update step" in the for
 
 ## Example: combine slow and fast update rates to remove ghosts and deal with intermittent motion
 
-	#include <opencv2/opencv.hpp>
-	#include <iostream>
-	#include "bgfg_amed.hpp"
-	
-	using namespace std;
-	using namespace cv;
-	
-	int main(int /*argc*/, char** /*argv[]*/)
-	{
-	    namedWindow("frame",CV_WINDOW_KEEPRATIO);
-	    namedWindow("foreground",CV_WINDOW_KEEPRATIO);
-	    
-	    Mat frame, foreground, foreground2;
-	    char key;
-	    
-	    VideoCapture cap(-1);
-	    if(!cap.isOpened()){
-	        cout << "Error opening video stream or file" << endl;
-	        return -1;
-	    }
-	    
-	    Ptr<BackgroundSubtractor> pAMED;
-	    pAMED = createBackgroundSubtractorAMED(20, 3, true, true); // not update where foreground objects are present
-	    
-	    Ptr<BackgroundSubtractor> pAMED2;
-	    pAMED2 = createBackgroundSubtractorAMED(20, 5, true, false);
-	    
-	    cap >> frame;
-	    double t = (double)getTickCount(); // start timer
-	    while(!frame.empty()){
-	        imshow("frame", frame);
-	        
-	        // update both background models
-	        pAMED->apply(frame, foreground, 0.1); // slow update
-	        pAMED2->apply(frame, foreground2, 2); // fast update
-	        
-	        //combine ouput
-	        bitwise_and(foreground, foreground2,foreground);
-	
-	        imshow("foreground", foreground);
-	        
-	        cap >> frame;
-	        
-	        key=(char) waitKey(1);
-	        if(key == (char)27){
-	            break;
-	        }
-	    }
-	
-	    cap.release();
-	    destroyAllWindows();
-	    
-	    return 0;
-	}
+```c++
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include "bgfg_amed.hpp"
+
+using namespace std;
+using namespace cv;
+
+int main(int /*argc*/, char** /*argv[]*/)
+{
+    namedWindow("frame",CV_WINDOW_KEEPRATIO);
+    namedWindow("foreground",CV_WINDOW_KEEPRATIO);
+    
+    Mat frame, foreground, foreground2;
+    char key;
+    
+    VideoCapture cap(-1);
+    if(!cap.isOpened()){
+        cout << "Error opening video stream or file" << endl;
+        return -1;
+    }
+    
+    Ptr<BackgroundSubtractor> pAMED;
+    pAMED = createBackgroundSubtractorAMED(20, 3, true, true); // not update where foreground objects are present
+    
+    Ptr<BackgroundSubtractor> pAMED2;
+    pAMED2 = createBackgroundSubtractorAMED(20, 5, true, false);
+    
+    cap >> frame;
+    double t = (double)getTickCount(); // start timer
+    while(!frame.empty()){
+        imshow("frame", frame);
+        
+        // update both background models
+        pAMED->apply(frame, foreground, 0.1); // slow update
+        pAMED2->apply(frame, foreground2, 2); // fast update
+        
+        //combine ouput
+        bitwise_and(foreground, foreground2,foreground);
+
+        imshow("foreground", foreground);
+        
+        cap >> frame;
+        
+        key=(char) waitKey(1);
+        if(key == (char)27){
+            break;
+        }
+    }
+
+    cap.release();
+    destroyAllWindows();
+    
+    return 0;
+}
+```
 	
 Current frame  
 ![ ](./docs/images/frame.png  "Frame")
