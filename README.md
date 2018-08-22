@@ -94,16 +94,16 @@ The "updateRate" in OpenCV interface corresponds to the "update step" in the for
 	    return 0;
 	}
 	
-Current frame
+Current frame  
 ![ ](./docs/images/frame.png  "Frame")
 
-Slow update rate with mask. Ghost due to car present on the first frame.
+Slow update rate with mask. Ghost due to car present on the first frame.  
 ![ ](./docs/images/background1.png  "Background1") ![ ](./docs/images/foreground1.png  "Foreground1")
 
-Fast update rate. Objects are incorporated too fast in the background, leaving some trail behind.
+Fast update rate. Objects are incorporated too fast in the background, leaving some trail behind.  
 ![ ](./docs/images/background2.png  "Background2") ![ ](./docs/images/foreground2.png  "Foreground2")
 
-Combination of both.
+Combination of both.  
 ![ ](./docs/images/foreground.png  "Foreground")
 
 
