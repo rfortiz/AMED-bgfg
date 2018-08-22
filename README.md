@@ -6,13 +6,7 @@ The following features are also added
 - Variable update steps (fixed to 1 in paper)
 - Rate ramping for faster initialization in presence of foreground objects.
 
-$$B_{t+1}^{c} = 
-\begin{cases}
-    B_{t}^{c}+updateStep &\quad \text{if } I_{t}^{c} > B_{t}^{c}\\
-    B_{t}^{c}-updateStep& \quad \text{if } I_{t}^{c} < B_{t}^{c}\\
-    B_{t}^{c} &\quad \text{if } I_{t}^{c} = B_{t}^{c}
-\end{cases}
-$$
+![adaptive median update formula](./docs/images/adaptive_median.png)
 
 
 ## Adaptive median
