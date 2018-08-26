@@ -74,6 +74,7 @@ class BackgroundSubtractorAMEDImpl: public BackgroundSubtractorAMED{
         
         Mat background;// background model converted to uchar (to compute difference with current frame and 'getBackgroundImage')
         Mat background_float;// background model
+        Mat current_frame_float;
         Mat above_background;
         Mat above_background_float;
         Mat below_background;
@@ -95,7 +96,7 @@ void BackgroundSubtractorAMEDImpl::apply(InputArray _image, OutputArray _fgmask,
     if(!is_init){         
         CV_Assert(current_frame.type() == CV_8UC1 || current_frame.type() == CV_8UC3);
         background = current_frame.clone();
-        background.convertTo(background_float, CV_32FC3);
+        background.convertTo(background_float, CV_32FC(current_frame.channels()));
         frame_type = current_frame.type();
         is_init = true;
     }
@@ -126,13 +127,14 @@ void BackgroundSubtractorAMEDImpl::apply(InputArray _image, OutputArray _fgmask,
     extractForeground(current_frame, foreground_mask);
     
     // compare current frame to background
-    above_background = current_frame > background;
-    below_background = current_frame < background;
+    current_frame.convertTo(current_frame_float, CV_32FC(current_frame.channels()) );
+    above_background = current_frame_float > background_float;
+    below_background = current_frame_float < background_float;
     above_background.convertTo(above_background_float, CV_32FC(current_frame.channels()) );
     below_background.convertTo(below_background_float, CV_32FC(current_frame.channels()) );
     
     // update background
-    if(masked_update){ // don't update where there are foreground objects
+    if(masked_update and ramp_learning_rate <= learning_rate){ // don't update where there are foreground objects
         Mat update_mask;
         bitwise_not(foreground_mask, update_mask);
         add(background_float, above_background_float*(ramp_learning_rate /255.0), background_float, update_mask);

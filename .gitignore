@@ -8,3 +8,5 @@ bin/*
 
 # geany project file
 *.geany
+
+.gitignore

@@ -56,9 +56,9 @@ int main(int /*argc*/, char** /*argv[]*/)
     }
     
     
-    Ptr<BackgroundSubtractor> pAMED;
+    Ptr<BackgroundSubtractorAMED> pAMED;
     pAMED = createBackgroundSubtractorAMED(20, 3, true, true); // not updating where foreground object are present
-    Ptr<BackgroundSubtractor> pAMED2;
+    Ptr<BackgroundSubtractorAMED> pAMED2;
     pAMED2 = createBackgroundSubtractorAMED(20, 5, true, false);
     
     int frame_id{1};

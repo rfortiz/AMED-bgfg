@@ -79,7 +79,7 @@ class BackgroundSubtractorAMED: public BackgroundSubtractor {
     Reduces noise but reduces precision of object boundaries. Set to '1' to disable.
     @param If true, starts with high learning rate and ramps down for fast initialization. 
     set to 'false' if the first frame does not contain foreground objects.
-    @param If true, regions with foreground objects are are not updated. 
+    @param If true, regions with foreground objects are are not updated. Only applies after ramping learning rate.
     Only small/gradual changes (i.e. below 'threshold') will be incorporated in the background.
     When true, objects removed from the background, will create permanent ghosts.
     

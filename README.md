@@ -1,6 +1,6 @@
 # Adaptive Median background for OpenCV
 
-Implementation of the adaptive median background estimation described in McFarlane, N.J. and Schofield, C.P., 1995. Segmentation and tracking of piglets in images. Machine vision and applications, 8(3), pp.187-193.
+Implementation of the adaptive median background estimation described in McFarlane, N.J. and Schofield, C.P., 1995. Segmentation and tracking of piglets in images. *Machine vision and applications*, 8(3), pp.187-193.
 
 The following features are also added
 - Variable update steps (fixed to 1 in paper)
@@ -28,7 +28,7 @@ Ptr<BackgroundSubtractorAMED> createBackgroundSubtractorAMED(double seg_threshol
 - **seg_threshold:** Intensity threshold to segment foreground objects.
 - **seg_blur_size:** Size of box blur applied on abs(current_frame-background) before thresholding. Reduces noise but reduces precision of object boundaries. Set to '1' to disable.
 - **ramp_init:** If true, starts with high learning rate and ramps down for fast initialization. Set to 'false' if the first frame does not contain foreground objects.
-- **masked_update:** If true, regions with foreground objects are are not updated. Only small/gradual changes (i.e. below 'threshold') will be incorporated in the background. When true, objects removed from the background, will create permanent ghosts.
+- **masked_update:** If true, regions with foreground objects are are not updated. Only applies after ramping learning rate. Only small/gradual changes (i.e. below 'threshold') will be incorporated in the background. When true, objects removed from the background, will create permanent ghosts.
 
 The "updateRate" in OpenCV interface corresponds to the "update step" in the formula above.
 

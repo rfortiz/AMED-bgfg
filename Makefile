@@ -38,10 +38,12 @@ clean:
 	
 
 test: $(TEST_OBJECTS)
-	$(CXX) $(CXXFLAGS) tests/test.cpp $(INC) $(LDFLAGS) $(TESTLDLIBS) -o bin/test $^
-	bin/test 
+	$(CXX) $(CXXFLAGS) tests/test.cpp -o bin/test $^ $(INC) $(LDFLAGS) $(TESTLDLIBS)
+	gnome-terminal --window-with-profile=run -- bin/test
 	
-
+benchmark: $(TEST_OBJECTS)
+	$(CXX) $(CXXFLAGS) sandbox/main-benchmark.cpp -o bin/benchmark $^ $(INC) $(LDFLAGS) $(TESTLDLIBS)
+	gnome-terminal --window-with-profile=run -- bin/benchmark
 
 run:
 	$(EXEC)
