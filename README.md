@@ -90,6 +90,8 @@ int main(int /*argc*/, char** /*argv[]*/)
     return 0;
 }
 ```
+
+Here is an example with a sequence from the change detection challenge that provides a benchmark to compare algorithms under various test conditions. ([www.changedetection.net](http://www.changedetection.net/))
 	
 Current frame  
 ![ ](./docs/images/frame.png  "Frame")
