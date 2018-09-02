@@ -1,6 +1,6 @@
 # Adaptive Median background for OpenCV
 
-Implementation of the adaptive median background estimation described in McFarlane, N.J. and Schofield, C.P., 1995. Segmentation and tracking of piglets in images. *Machine vision and applications*, 8(3), pp.187-193.
+C++ implementation of the adaptive median background estimation described in McFarlane, N.J. and Schofield, C.P., 1995. Segmentation and tracking of piglets in images. *Machine vision and applications*, 8(3), pp.187-193.
 
 The following features are also added
 - Variable update steps (fixed to 1 in paper)
@@ -16,6 +16,46 @@ Adaptive median background estimation can be very effective under certain condit
 3. Static/slowly drifting background
 
 While limited to certain applications it has the advantage of having few hyperparameters and is computationaly inexpensive.
+
+## Build and run/install
+These instructions have been tested on Ubuntu 17.10 with OpenCV 3.4.3. Adapt according to your configuration.
+
+Clone this github repo in current directory (or download manually):
+```
+git clone https://github.com/rfortiz/AMED-bgfg.git --single-branch
+```
+Create a build directory:
+```
+cd AMED-bgfg
+mkdir build
+cd build
+```
+Build:
+```
+cmake ..
+make 
+```
+Demo and test are built by default. To disable change to:
+```
+cmake -DBUILD_DEMO=OFF -DBUILD_TEST=OFF ..
+make
+```
+
+Run the demo and test:
+```
+make run
+make run_test
+```
+
+Install as shared library:
+```
+sudo make install
+sudo ldconfig
+```
+and add the link flag when linking your project
+```
+-L/usr/local/lib/ -lbgfgamed
+```
 
 ## Usage
 

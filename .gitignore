@@ -1,10 +1,9 @@
 # Ignore the build, lib and sandbox dirs
+bin
 build
 lib
 sandbox
 
-# Ignore any executables
-bin/*
 
 # geany project file
 *.geany
